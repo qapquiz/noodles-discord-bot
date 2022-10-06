@@ -15,9 +15,11 @@ const bot = createBot({
 });
 
 bot.events.reactionAdd = function (bot, payload) {
+	console.log('reactionAdd');
 	const { userId, channelId, messageId, emoji } = payload;
 
-	if (channelId === verifyChannel) return
+	switch (c)
+	if (channelId !== verifyChannel) return
 
 	console.log("payload:", JSON.stringify(payload, null, 2));
 };
