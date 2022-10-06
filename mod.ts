@@ -1,4 +1,4 @@
-import { createBot, EmojiToggle, Intents, startBot } from "./deps.ts";
+import { createBot, Intents, startBot } from "./deps.ts";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 
 const verifyChannel = BigInt("1021807055503364187");
@@ -15,11 +15,12 @@ const bot = createBot({
 });
 
 bot.events.reactionAdd = function (bot, payload) {
-	console.log('reactionAdd');
+	console.log("reactionAdd");
 	const { userId, channelId, messageId, emoji } = payload;
 
-	switch (c)
-	if (channelId !== verifyChannel) return
+	if (channelId !== verifyChannel) {
+		return;
+	}
 
 	console.log("payload:", JSON.stringify(payload, null, 2));
 };
