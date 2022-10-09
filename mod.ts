@@ -103,4 +103,8 @@ enableCachePlugin(bot);
 enableCacheSweepers(bot as BotWithCache);
 enablePermissionsPlugin(bot as BotWithCache);
 
+setInterval(async () => {
+	// keep alive
+}, 10000);
+
 await startBot(bot);
