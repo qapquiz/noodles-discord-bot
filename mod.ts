@@ -110,8 +110,8 @@ setInterval(async () => {
 		status: 'online',
 		activities: [
 			{
-				type: ActivityTypes.Custom,
-				name: "eating some noodles",
+				type: ActivityTypes.Competing,
+				name: "noodles challenge",
 				createdAt: new Date().getTime(),
 			}
 		]
