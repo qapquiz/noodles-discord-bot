@@ -11,6 +11,7 @@ import {
 	Bot,
 	Interaction,
 	InteractionResponseTypes,
+ActivityTypes,
 } from "./deps.ts";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 
@@ -105,6 +106,16 @@ enablePermissionsPlugin(bot as BotWithCache);
 
 setInterval(async () => {
 	// keep alive
+	await bot.helpers.editBotStatus({
+		status: 'online',
+		activities: [
+			{
+				type: ActivityTypes.Custom,
+				name: "eating some noodles",
+				createdAt: new Date().getTime(),
+			}
+		]
+	});
 }, 10000);
 
 await startBot(bot);
