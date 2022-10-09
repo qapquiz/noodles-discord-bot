@@ -39,14 +39,9 @@ const bot = createBot({
 			console.log("Successfully connected to gateway");
 		},
 		messageCreate(bot: Bot, message: Message) {
-			console.log("message:", message);
 			if (message.isFromBot) {
 				return;
 			}
-
-			bot.helpers.sendMessage(message.channelId, {
-				content: "verify by react to ✅ below here",
-			});
 		},
 		async reactionAdd(bot: Bot, { userId, channelId, emoji, guildId }) {
 			if (guildId === undefined) {
