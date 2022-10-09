@@ -11,7 +11,8 @@ import {
 	Bot,
 	Interaction,
 	InteractionResponseTypes,
-ActivityTypes,
+	ActivityTypes,
+	serve,
 } from "./deps.ts";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 
@@ -75,16 +76,24 @@ const bot = createBot({
 						return;
 					}
 
-					const message = await bot.helpers.sendMessage(interaction.channelId, {
-						embeds: [
-							{
-								title: "Welcome to noodles ≈ 🍜",
-								description: "Click the ✅ to verify and gain access to the rest of the server."
-							}
-						]
-					});
+					const message = await bot.helpers.sendMessage(
+						interaction.channelId,
+						{
+							embeds: [
+								{
+									title: "Welcome to noodles ≈ 🍜",
+									description:
+										"Click the ✅ to verify and gain access to the rest of the server.",
+								},
+							],
+						}
+					);
 
-					await bot.helpers.addReaction(interaction.channelId, message.id, "✅");
+					await bot.helpers.addReaction(
+						interaction.channelId,
+						message.id,
+						"✅"
+					);
 					break;
 				}
 				default:
@@ -102,15 +111,16 @@ enablePermissionsPlugin(bot as BotWithCache);
 setInterval(async () => {
 	// keep alive
 	await bot.helpers.editBotStatus({
-		status: 'online',
+		status: "online",
 		activities: [
 			{
 				type: ActivityTypes.Competing,
 				name: "noodles challenge",
 				createdAt: new Date().getTime(),
-			}
-		]
+			},
+		],
 	});
 }, 10000);
 
+serve((_req) => new Response("still alive!"));
 await startBot(bot);
