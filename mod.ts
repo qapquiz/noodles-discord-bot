@@ -15,8 +15,7 @@ import {
 	serve,
 } from "./deps.ts";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
-
-// const guildId = 1021799324881010768n;
+import { verifyMessageId } from "./constant.ts";
 
 const ChannelId = {
 	Verify: 1021807055503364187n,
@@ -44,20 +43,33 @@ const bot = createBot({
 				return;
 			}
 		},
-		async reactionAdd(bot: Bot, { userId, channelId, emoji, guildId }) {
-			if (guildId === undefined) {
-				return;
-			}
-
-			if (channelId !== ChannelId.Verify && emoji.name !== "✅") {
-				return;
-			}
+		async reactionAdd(
+			bot: Bot,
+			{ userId, channelId, messageId, guildId, emoji }
+		) {
+			if (guildId === undefined) return;
+			if (verifyMessageId !== messageId) return;
+			if (channelId !== ChannelId.Verify && emoji.name !== "✅") return;
 
 			const verifiedRole = (await bot.helpers.getRoles(guildId)).find(
 				(role) => role.name === "verified"
 			);
 			verifiedRole &&
 				bot.helpers.addRole(guildId, userId, verifiedRole.id);
+		},
+		async reactionRemove(
+			bot: Bot,
+			{ userId, channelId, messageId, guildId, emoji }
+		) {
+			if (guildId === undefined) return;
+			if (verifyMessageId !== messageId) return;
+			if (channelId !== ChannelId.Verify && emoji.name !== "✅") return;
+
+			const verifiedRole = (await bot.helpers.getRoles(guildId)).find(
+				(role) => role.name === "verified"
+			);
+			verifiedRole &&
+				bot.helpers.removeRole(guildId, userId, verifiedRole.id);
 		},
 		async interactionCreate(bot: Bot, interaction: Interaction) {
 			switch (interaction.data?.name) {
