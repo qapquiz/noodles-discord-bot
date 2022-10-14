@@ -1,6 +1,6 @@
 import { Bot } from "../deps.ts";
 
-type Role = "verified"
+type Role = "verified";
 
 async function addRole(
 	bot: Bot,
@@ -8,10 +8,10 @@ async function addRole(
 	userId: bigint,
 	desireRole: Role
 ) {
-	const verifiedRole = (await bot.helpers.getRoles(guildId)).find(
+	const roleToAdd = (await bot.helpers.getRoles(guildId)).find(
 		(role) => role.name === desireRole.toString()
 	);
-	verifiedRole && bot.helpers.addRole(guildId, userId, verifiedRole.id);
+	roleToAdd && bot.helpers.addRole(guildId, userId, roleToAdd.id);
 }
 
 async function removeRole(
@@ -20,11 +20,11 @@ async function removeRole(
 	userId: bigint,
 	desireRole: Role
 ) {
-	const verifiedRole = (await bot.helpers.getRoles(guildId)).find(
-		(role) => role.name === desireRole.toString() 
+	const roleToRemove = (await bot.helpers.getRoles(guildId)).find(
+		(role) => role.name === desireRole.toString()
 	);
-	verifiedRole && bot.helpers.removeRole(guildId, userId, verifiedRole.id);
+	roleToRemove && bot.helpers.removeRole(guildId, userId, roleToRemove.id);
 }
 
-export { addRole,removeRole };
+export { addRole, removeRole };
 export type { Role };
