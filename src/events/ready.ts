@@ -1,3 +1,3 @@
 export function ready() {
-    console.log("Successfully connected to gateway");
+	console.log("Successfully connected to gateway");
 }
