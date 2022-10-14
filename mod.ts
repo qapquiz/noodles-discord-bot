@@ -7,24 +7,17 @@ import {
 	Intents,
 	startBot,
 	BotWithCache,
-	Message,
-	Bot,
-	Interaction,
-	InteractionResponseTypes,
 	ActivityTypes,
 	serve,
 } from "./deps.ts";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
-import { verifyMessageId } from "./constant.ts";
-
-const ChannelId = {
-	Verify: 1021807055503364187n,
-};
-
-enum Commands {
-	Ping = "ping",
-	Verify = "verify",
-}
+import {
+	interactionCreate,
+	messageCreate,
+	reactionAdd,
+	reactionRemove,
+	ready,
+} from "./src/events/mod.ts";
 
 const bot = createBot({
 	token: Deno.env.get("DISCORD_TOKEN")!,
@@ -35,83 +28,11 @@ const bot = createBot({
 		Intents.GuildMessageReactions,
 	botId: BigInt(Deno.env.get("CLIENT_ID")!),
 	events: {
-		ready() {
-			console.log("Successfully connected to gateway");
-		},
-		messageCreate(bot: Bot, message: Message) {
-			if (message.isFromBot) {
-				return;
-			}
-		},
-		async reactionAdd(
-			bot: Bot,
-			{ userId, channelId, messageId, guildId, emoji }
-		) {
-			if (guildId === undefined) return;
-			if (verifyMessageId !== messageId) return;
-			if (channelId !== ChannelId.Verify && emoji.name !== "✅") return;
-
-			const verifiedRole = (await bot.helpers.getRoles(guildId)).find(
-				(role) => role.name === "verified"
-			);
-			verifiedRole &&
-				bot.helpers.addRole(guildId, userId, verifiedRole.id);
-		},
-		async reactionRemove(
-			bot: Bot,
-			{ userId, channelId, messageId, guildId, emoji }
-		) {
-			if (guildId === undefined) return;
-			if (verifyMessageId !== messageId) return;
-			if (channelId !== ChannelId.Verify && emoji.name !== "✅") return;
-
-			const verifiedRole = (await bot.helpers.getRoles(guildId)).find(
-				(role) => role.name === "verified"
-			);
-			verifiedRole &&
-				bot.helpers.removeRole(guildId, userId, verifiedRole.id);
-		},
-		async interactionCreate(bot: Bot, interaction: Interaction) {
-			switch (interaction.data?.name) {
-				case Commands.Ping:
-					await bot.helpers.sendInteractionResponse(
-						interaction.id,
-						interaction.token,
-						{
-							type: InteractionResponseTypes.ChannelMessageWithSource,
-							data: { content: "🏓 Pong!" },
-						}
-					);
-					break;
-				case Commands.Verify: {
-					if (interaction.channelId === undefined) {
-						return;
-					}
-
-					const message = await bot.helpers.sendMessage(
-						interaction.channelId,
-						{
-							embeds: [
-								{
-									title: "Welcome to noodles ≈ 🍜",
-									description:
-										"Click the ✅ to verify and gain access to the rest of the server.",
-								},
-							],
-						}
-					);
-
-					await bot.helpers.addReaction(
-						interaction.channelId,
-						message.id,
-						"✅"
-					);
-					break;
-				}
-				default:
-					break;
-			}
-		},
+		ready,
+		messageCreate,
+		reactionAdd,
+		reactionRemove,
+		interactionCreate,
 	},
 });
 
@@ -120,19 +41,16 @@ enableCachePlugin(bot);
 enableCacheSweepers(bot as BotWithCache);
 enablePermissionsPlugin(bot as BotWithCache);
 
-setInterval(async () => {
-	// keep alive
-	await bot.helpers.editBotStatus({
-		status: "online",
-		activities: [
-			{
-				type: ActivityTypes.Competing,
-				name: "noodles challenge",
-				createdAt: new Date().getTime(),
-			},
-		],
-	});
-}, 10000);
+await bot.helpers.editBotStatus({
+	status: "online",
+	activities: [
+		{
+			type: ActivityTypes.Competing,
+			name: "noodles challenge",
+			createdAt: new Date().getTime(),
+		},
+	],
+});
 
 serve((_req) => new Response("still alive!"));
 await startBot(bot);
