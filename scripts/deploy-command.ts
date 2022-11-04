@@ -33,6 +33,4 @@ for (const server of ServerConstants) {
 	for (const slashCommand of slashCommands) {
 		await bot.helpers.createGuildApplicationCommand(slashCommand, server.GuildId);
 	}
-});
-
-
+}

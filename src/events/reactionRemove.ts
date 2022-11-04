@@ -1,7 +1,6 @@
 import { Emoji } from "../../deps.ts";
 import { Bot } from "../../deps.ts";
-import { ChannelId } from "../constant.ts";
-import { verifyMessageId } from "../constant.ts";
+import { ServerConstants } from "../constant.ts";
 import { removeRole } from "../role.ts";
 
 export async function reactionRemove(
@@ -20,9 +19,12 @@ export async function reactionRemove(
 		emoji: Emoji;
 	}
 ) {
+	const server = ServerConstants.find((eachServer) => eachServer.Channel.Verify === channelId)
+
+	if (server === undefined) return;
 	if (guildId === undefined) return;
-	if (verifyMessageId !== messageId) return;
-	if (channelId !== ChannelId.Verify && emoji.name !== "✅") return;
+	if (server.VerifyMessageId !== messageId) return;
+	if (channelId !== server.Channel.Verify && emoji.name !== "✅") return;
 
 	await removeRole(bot, guildId, userId, "verified");
 }
