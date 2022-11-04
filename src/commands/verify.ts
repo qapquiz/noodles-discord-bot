@@ -1,9 +1,7 @@
 import { Bot, Interaction } from "../../deps.ts";
 
 export async function verifyHandler(bot: Bot, interaction: Interaction) {
-	if (interaction.channelId === undefined) {
-		return;
-	}
+	if (interaction.channelId === undefined) return;
 
 	const message = await bot.helpers.sendMessage(interaction.channelId, {
 		embeds: [

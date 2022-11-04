@@ -1,6 +1,6 @@
 import { Bot } from "../deps.ts";
 
-type Role = "verified";
+type Role = string;
 
 async function addRole(
 	bot: Bot,
