@@ -23,7 +23,9 @@ export async function reactionAdd(
 		emoji: Emoji;
 	}
 ) {
-	const server = ServerConstants.find((eachServer) => eachServer.Channel.Verify === channelId)
+	const server = ServerConstants.find(
+		(eachServer) => eachServer.Channel.Verify === channelId
+	);
 
 	if (server === undefined) return;
 	if (guildId === undefined) return;

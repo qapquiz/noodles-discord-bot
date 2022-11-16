@@ -25,12 +25,14 @@ for (const server of ServerConstants) {
 			options: [],
 		},
 		{
-			name: "verifyHolder",
+			name: "verify-holder",
 			description: "Create verify holder message and wait for interval",
+			options: [],
 		},
 	];
 
 	for (const slashCommand of slashCommands) {
+		console.log(`SERVER: ${server.GuildId} COMMAND: ${slashCommand.name}`)
 		await bot.helpers.createGuildApplicationCommand(slashCommand, server.GuildId);
 	}
 }

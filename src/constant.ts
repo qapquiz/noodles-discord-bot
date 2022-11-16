@@ -1,4 +1,5 @@
 type Server = {
+	Name: string,
 	GuildId: bigint,
 	Channel: Record<string, bigint>,
 	VerifyMessageId: bigint,
@@ -8,6 +9,7 @@ type Server = {
 const ServerConstants: Array<Server> = [
 	// Noodles
 	{
+		Name: "noodles ≈ 🍜",
 		GuildId: 1021799324881010768n,
 		Channel: {
 			Verify: 1021807055503364187n,
@@ -18,13 +20,14 @@ const ServerConstants: Array<Server> = [
 	},
 	// Moody Bear
 	{
-		GuildId: 1n,
+		Name: "Moody Bear",
+		GuildId: 1036403649099878501n,
 		Channel: {
-			Verify: 1n,
+			Verify: 1042458472211550258n,
 			VerifyHolder: 1n
 		},
-		VerifyMessageId: 1n,
-		VerifyRoleName: "verified",
+		VerifyMessageId: 1042473313492025418n,
+		VerifyRoleName: "Moodies",
 	},
 ];
 
