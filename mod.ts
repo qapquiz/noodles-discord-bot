@@ -12,6 +12,7 @@ import {
 } from "./deps.ts";
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 import {
+	guildMemberAdd,
 	interactionCreate,
 	messageCreate,
 	reactionAdd,
@@ -33,6 +34,7 @@ const bot = createBot({
 		reactionAdd,
 		reactionRemove,
 		interactionCreate,
+		guildMemberAdd,
 	},
 });
 
