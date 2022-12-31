@@ -17,4 +17,11 @@ export function messageCreate(bot: Bot, message: Message) {
   ) {
     bot.helpers.sendMessage(message.channelId, { content: "wen draw" });
   }
+
+  if (
+    message.content.startsWith("!aim") &&
+    message.guildId === serverConfig.GuildId
+  ) {
+    bot.helpers.sendMessage(message.channelId, { content: "<@733124129615773820> 🔫" });
+  }
 }
