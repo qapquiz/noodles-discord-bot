@@ -24,6 +24,7 @@ const bot = createBot({
 	token: Deno.env.get("DISCORD_TOKEN")!,
 	intents:
 		Intents.Guilds |
+		Intents.GuildMembers |
 		Intents.GuildMessages |
 		Intents.MessageContent |
 		Intents.GuildMessageReactions,
