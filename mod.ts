@@ -55,5 +55,15 @@ await bot.helpers.editBotStatus({
 	],
 });
 
-serve((_req) => new Response("still alive!"));
+const TWITTER_FEED_HOOK_ROUTE = new URLPattern({ pathname: "/twitter-feed" });
+
+const handler = (req: Request): Response => {
+	if (TWITTER_FEED_HOOK_ROUTE.exec(req.url)) {
+		console.log("twitter feed req:", req);
+	}
+
+	return new Response("still alive!");
+};
+
+serve(handler);
 await startBot(bot);
