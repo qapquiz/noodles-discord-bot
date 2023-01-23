@@ -15,6 +15,7 @@ const ServerConstants: Array<Server> = [
 			Verify: 1021807055503364187n,
 			VerifyHolder: 0n,
 			Welcome: 1057511145243676762n,
+			twitterFeed: 1056209901787025499n,
 		},
 		VerifyMessageId: 1028609208989523969n,
 		VerifyRoleName: "verified",
