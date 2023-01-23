@@ -1,27 +1,29 @@
+import { BotCache } from "../bot.ts";
 import { Bot } from "../deps.ts";
 
 type Role = string;
 
-async function addRole(
+function addRole(
 	bot: Bot,
 	guildId: bigint,
 	userId: bigint,
-	desireRole: Role
+	desireRole: Role,
 ) {
-	const roleToAdd = (await bot.helpers.getRoles(guildId)).find(
-		(role) => role.name === desireRole.toString()
+	const roleToAdd = (BotCache.guilds.get(guildId)?.roles ?? []).find(
+		(role) => role.name === desireRole.toString(),
 	);
+
 	roleToAdd && bot.helpers.addRole(guildId, userId, roleToAdd.id);
 }
 
-async function removeRole(
+function removeRole(
 	bot: Bot,
 	guildId: bigint,
 	userId: bigint,
-	desireRole: Role
+	desireRole: Role,
 ) {
-	const roleToRemove = (await bot.helpers.getRoles(guildId)).find(
-		(role) => role.name === desireRole.toString()
+	const roleToRemove = (BotCache.guilds.get(guildId)?.roles ?? []).find(
+		(role) => role.name === desireRole.toString(),
 	);
 	roleToRemove && bot.helpers.removeRole(guildId, userId, roleToRemove.id);
 }

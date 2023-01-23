@@ -3,7 +3,7 @@ import { Bot } from "../../deps.ts";
 import { ServerConstants } from "../constant.ts";
 import { removeRole } from "../role.ts";
 
-export async function reactionRemove(
+export function reactionRemove(
 	bot: Bot,
 	{
 		userId,
@@ -28,5 +28,5 @@ export async function reactionRemove(
 	if (server.VerifyMessageId !== messageId) return;
 	if (channelId !== server.Channel.Verify && emoji.name !== "✅") return;
 
-	await removeRole(bot, guildId, userId, server.VerifyRoleName);
+	removeRole(bot, guildId, userId, server.VerifyRoleName);
 }

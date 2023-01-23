@@ -45,8 +45,7 @@ enableCacheSweepers(bot as BotWithCache);
 enablePermissionsPlugin(bot as BotWithCache);
 
 export interface BotClient extends BotWithCache<BotWithHelpersPlugin> {
-	// deno-lint-ignore no-explicit-any
-	commands: Collection<string, any>;
+	commands: Collection<string, unknown>;
 }
 
 export const BotCache = bot as BotClient;

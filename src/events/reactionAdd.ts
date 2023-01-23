@@ -5,7 +5,7 @@ import { Bot } from "../../deps.ts";
 import { ServerConstants } from "../constant.ts";
 import { addRole } from "../role.ts";
 
-export async function reactionAdd(
+export function reactionAdd(
 	bot: Bot,
 	{
 		userId,
@@ -32,5 +32,5 @@ export async function reactionAdd(
 	if (server.VerifyMessageId !== messageId) return;
 	if (channelId !== server.Channel.Verify && emoji.name !== "✅") return;
 
-	await addRole(bot, guildId, userId, server.VerifyRoleName);
+	addRole(bot, guildId, userId, server.VerifyRoleName);
 }
