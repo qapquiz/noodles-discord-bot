@@ -33,4 +33,5 @@ export function reactionAdd(
 	if (channelId !== server.Channel.Verify && emoji.name !== "✅") return;
 
 	addRole(bot, guildId, userId, server.VerifyRoleName);
+	console.log("add verified role");
 }

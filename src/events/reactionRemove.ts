@@ -29,4 +29,5 @@ export function reactionRemove(
 	if (channelId !== server.Channel.Verify && emoji.name !== "✅") return;
 
 	removeRole(bot, guildId, userId, server.VerifyRoleName);
+	console.log("remove verified role");
 }
