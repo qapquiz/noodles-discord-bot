@@ -64,6 +64,7 @@ function handlerWenCommand(bot: Bot, message: Message): void {
   }
 
   const defaultMessages = [
+    "wen !aim",
     "wen stop asking bro",
     "wen wat",
     "try asking founder",
