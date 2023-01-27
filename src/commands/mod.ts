@@ -15,6 +15,7 @@ export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
 		case Commands.Verify:
 			await verifyHandler(bot, interaction);
 			break;
+		// @todo cretae new command to create message for react-role with button to receive and remove roles
 		default:
 			break;
 	}
