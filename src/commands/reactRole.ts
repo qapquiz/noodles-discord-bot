@@ -17,8 +17,8 @@ export async function reactRoleHandler(_bot: Bot, interaction: Interaction) {
       {
         title: "Click the buttons below to receive role",
         description: `🎁 - giveaways ping
-				🎮 - games ping
-				💎 - airdrop oppurtunity chance
+🎮 - games ping
+💎 - airdrop oppurtunity chance
 				`,
       },
     ],
@@ -30,19 +30,19 @@ export async function reactRoleHandler(_bot: Bot, interaction: Interaction) {
             type: MessageComponentTypes.Button,
             label: "🎁",
             style: ButtonStyles.Primary,
-			customId: ReactRoleId.Giveaways,
+            customId: ReactRoleId.Giveaways,
           },
           {
             type: MessageComponentTypes.Button,
             label: "🎮",
             style: ButtonStyles.Secondary,
-			customId: ReactRoleId.Games,
+            customId: ReactRoleId.Games,
           },
           {
             type: MessageComponentTypes.Button,
             label: "💎",
             style: ButtonStyles.Success,
-			customId: ReactRoleId.Airdrop,
+            customId: ReactRoleId.Airdrop,
           },
         ],
       },
