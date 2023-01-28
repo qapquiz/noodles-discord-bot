@@ -4,6 +4,11 @@ type Server = {
 	Channel: Record<string, bigint>,
 	VerifyMessageId: bigint,
 	VerifyRoleName: string,
+	roles?: {
+		giveaways: bigint,
+		games: bigint,
+		airdrop: bigint
+	}
 };
 
 const ServerConstants: Array<Server> = [
@@ -19,6 +24,11 @@ const ServerConstants: Array<Server> = [
 		},
 		VerifyMessageId: 1028609208989523969n,
 		VerifyRoleName: "verified",
+		roles: {
+			giveaways: 1068867082176958494n,
+			games: 1068866943228051537n,
+			airdrop: 1068867013772058754n,
+		},
 	},
 	// Moody Bear
 	{

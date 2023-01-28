@@ -25,8 +25,8 @@ for (const server of ServerConstants) {
 			options: [],
 		},
 		{
-			name: "verify-holder",
-			description: "Create verify holder message and wait for interval",
+			name: "react_role",
+			description: "Create react role message and wait for interaction",
 			options: [],
 		},
 	];
@@ -34,5 +34,6 @@ for (const server of ServerConstants) {
 	for (const slashCommand of slashCommands) {
 		console.log(`SERVER: ${server.GuildId} COMMAND: ${slashCommand.name}`)
 		await bot.helpers.createGuildApplicationCommand(slashCommand, server.GuildId);
+		console.log(slashCommand)
 	}
 }
