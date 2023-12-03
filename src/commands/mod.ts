@@ -9,12 +9,14 @@ import { addRoleWithId, isHasRole, removeRoleWithId } from "../role.ts";
 import { pingHandler } from "./ping.ts";
 import { reactRoleHandler } from "./reactRole.ts";
 import { verifyHandler } from "./verify.ts";
+import { checkJupHandler } from "./checkJup.ts";
 import { BotCache } from "../../bot.ts";
 
 export enum Commands {
   Ping = "ping",
   Verify = "verify",
   ReactRole = "react_role",
+  CheckJup = "check_jup",
 }
 
 export enum ReactRoleId {
@@ -29,34 +31,42 @@ async function sendAddRoleSuccessfulMessage(
   interactionId: bigint,
   interactionToken: string,
 ) {
-  await BotCache.helpers.sendInteractionResponse(interactionId, interactionToken, {
-    type: InteractionResponseTypes.ChannelMessageWithSource,
-    data: {
-      embeds: [
-        {
-          title: "Add Role Successful",
-        },
-      ],
-	  flags: EPHEMERAL,
+  await BotCache.helpers.sendInteractionResponse(
+    interactionId,
+    interactionToken,
+    {
+      type: InteractionResponseTypes.ChannelMessageWithSource,
+      data: {
+        embeds: [
+          {
+            title: "Add Role Successful",
+          },
+        ],
+        flags: EPHEMERAL,
+      },
     },
-  });
+  );
 }
 
 async function sendRemoveRoleSuccessfulMessage(
   interactionId: bigint,
   interactionToken: string,
 ) {
-  await BotCache.helpers.sendInteractionResponse(interactionId, interactionToken, {
-    type: InteractionResponseTypes.ChannelMessageWithSource,
-    data: {
-      embeds: [
-        {
-          title: "Remove Role Successful",
-        },
-      ],
-	  flags: EPHEMERAL,
+  await BotCache.helpers.sendInteractionResponse(
+    interactionId,
+    interactionToken,
+    {
+      type: InteractionResponseTypes.ChannelMessageWithSource,
+      data: {
+        embeds: [
+          {
+            title: "Remove Role Successful",
+          },
+        ],
+        flags: EPHEMERAL,
+      },
     },
-  });
+  );
 }
 
 export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
@@ -70,6 +80,9 @@ export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
     // @todo cretae new command to create message for react-role with button to receive and remove roles
     case Commands.ReactRole:
       await reactRoleHandler(bot, interaction);
+      break;
+    case Commands.CheckJup:
+      await checkJupHandler(bot, interaction);
       break;
     default:
       break;
@@ -95,7 +108,7 @@ export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
             interaction.user.id,
             serverConfig.roles?.giveaways ?? 0n,
           );
-		  await sendAddRoleSuccessfulMessage(interaction.id, interaction.token)
+          await sendAddRoleSuccessfulMessage(interaction.id, interaction.token);
         } else {
           // remove role
           removeRoleWithId(
@@ -103,7 +116,10 @@ export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
             interaction.user.id,
             serverConfig.roles?.giveaways ?? 0n,
           );
-		  await sendRemoveRoleSuccessfulMessage(interaction.id, interaction.token)
+          await sendRemoveRoleSuccessfulMessage(
+            interaction.id,
+            interaction.token,
+          );
         }
         break;
       case ReactRoleId.Games:
@@ -120,7 +136,7 @@ export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
             interaction.user.id,
             serverConfig.roles?.games ?? 0n,
           );
-		  await sendAddRoleSuccessfulMessage(interaction.id, interaction.token)
+          await sendAddRoleSuccessfulMessage(interaction.id, interaction.token);
         } else {
           // remove role
           removeRoleWithId(
@@ -128,7 +144,10 @@ export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
             interaction.user.id,
             serverConfig.roles?.games ?? 0n,
           );
-		  await sendRemoveRoleSuccessfulMessage(interaction.id, interaction.token)
+          await sendRemoveRoleSuccessfulMessage(
+            interaction.id,
+            interaction.token,
+          );
         }
         break;
       case ReactRoleId.Airdrop:
@@ -145,7 +164,7 @@ export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
             interaction.user.id,
             serverConfig.roles?.airdrop ?? 0n,
           );
-		  await sendAddRoleSuccessfulMessage(interaction.id, interaction.token)
+          await sendAddRoleSuccessfulMessage(interaction.id, interaction.token);
         } else {
           // remove role
           removeRoleWithId(
@@ -153,7 +172,10 @@ export async function commandEntryPoint(bot: Bot, interaction: Interaction) {
             interaction.user.id,
             serverConfig.roles?.airdrop ?? 0n,
           );
-		  await sendRemoveRoleSuccessfulMessage(interaction.id, interaction.token)
+          await sendRemoveRoleSuccessfulMessage(
+            interaction.id,
+            interaction.token,
+          );
         }
         break;
     }
