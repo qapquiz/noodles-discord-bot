@@ -15,7 +15,7 @@ export async function messageCreate(bot: Bot, message: Message): void {
   const isMentionedBot = message.mentionedUserIds.some((mentionUserId) => mentionUserId === bot.id);
 
   switch (true) {
-    case message.guildId === serverConfig.GuildId:
+    case message.guildId === serverConfig.GuildId && message.content.startsWith("!wen"):
       handlerWenCommand(bot, message);
       break;
     case isMentionedBot:
