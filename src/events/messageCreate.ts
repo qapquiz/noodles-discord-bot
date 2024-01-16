@@ -14,15 +14,15 @@ export async function messageCreate(bot: Bot, message: Message): void {
 
   const isMentionedBot = message.mentionedUserIds.some((mentionUserId) => mentionUserId === bot.id);
 
-  switch (true) {
-    case message.guildId === serverConfig.GuildId && message.content.startsWith("!wen"):
-      handlerWenCommand(bot, message);
-      break;
-    case isMentionedBot:
-      await handleWithGemini(bot, message);
-      break;
-    default:
-      break;
+  if (message.guildId === serverConfig.GuildId && message.content.startsWith("!wen")) {
+    handlerWenCommand(bot, message);
+    return;
+  } else if (
+    message.guildId === serverConfig.GuildId &&
+    isMentionedBot
+  ) {
+    await handleWithGemini(bot, message);
+    return;
   }
 }
 
