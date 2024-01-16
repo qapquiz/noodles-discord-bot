@@ -1,8 +1,9 @@
 import { Bot } from "../../deps.ts";
 import { Message } from "../../deps.ts";
 import { ServersMapped } from "../constant.ts";
+import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 
-export function messageCreate(bot: Bot, message: Message): void {
+export async function messageCreate(bot: Bot, message: Message): void {
   if (message.isFromBot) {
     return;
   }
@@ -11,13 +12,43 @@ export function messageCreate(bot: Bot, message: Message): void {
 
   if (serverConfig === undefined) return;
 
-  if (
-    message.guildId === serverConfig.GuildId &&
-    message.content.startsWith("!wen")
-  ) {
-    handlerWenCommand(bot, message);
-    return;
+  const isMentionedBot = message.mentionedUserIds.some((mentionUserId) => mentionUserId === bot.id);
+
+  switch (true) {
+    case message.guildId === serverConfig.GuildId:
+      handlerWenCommand(bot, message);
+      break;
+    case isMentionedBot:
+      await handleWithGemini(bot, message);
+      break;
+    default:
+      break;
   }
+}
+
+async function handleWithGemini(bot: Bot, message: Message): Promise<void> {
+  const content = message.content;
+  const geminiUrl = `${Deno.env.get("CLOUD_FUNCTION_GEMINI_URL")}/textOnlyFunc`;
+
+  const response = await fetch(
+    geminiUrl,
+    {
+      method: "POST",
+      body: content,
+    }
+  );
+
+  const result = await response.json() as { prompt: string, answer: string };
+  await bot.helpers.sendMessage(
+    message.channelId,
+    {
+      content: result.answer,
+      messageReference: {
+        messageId: message.id,
+        failIfNotExists: false,
+      }
+    }
+  );
 }
 
 function handlerWenCommand(bot: Bot, message: Message): void {
